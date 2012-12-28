@@ -1,1 +1,0 @@
-javascript:(function(){var e="http://yobriefca.se/trello-cards/",t="",n=document.createElement("link");n.rel="stylesheet",n.href=e+"pivotal-cards.css"+t,n.media="screen,print",n.type="text/css",document.getElementsByTagName("head")[0].appendChild(n);var r=document.createElement("script");r.src=e+"pivotal-cards.js"+t,document.body.appendChild(r)})();
