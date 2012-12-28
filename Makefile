@@ -1,5 +1,5 @@
-TEST_LOCATION="http://localhost/pivotal-cards/"
-LIVE_LOCATION="http://psd.github.com/pivotal-cards/"
+TEST_LOCATION="http://localhost:8000/"
+LIVE_LOCATION="http://yobriefca.se/trello-cards/"
 
 all::	dependencies
 all::	bookmarklet test-bookmarklet
@@ -12,6 +12,11 @@ bookmarklet:	bookmarklet.js Makefile
 
 test-bookmarklet:	bookmarklet.js Makefile
 	( echo "javascript:\\c" ; sed -e "s+location = '+location='$(TEST_LOCATION)+" -e "s/nocache = ''/nocache='?nocache='+Math.random()/" < bookmarklet.js | uglifyjs ) > $@
+
+serve: dependencies bookmarklet test-bookmarklet server
+
+server:
+	python -m SimpleHTTPServer
 
 #
 #  dependencies
@@ -26,7 +31,7 @@ underscore.js:
 
 uglifyjs::
 	npm install -g uglify-js
-	
+
 
 #
 #  prune back to source code
