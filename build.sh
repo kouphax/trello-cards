@@ -8,15 +8,15 @@ cat <<-!
 # Pivotal Cards
 
 Printable index cards for your [Trello](https://www.trello.com) project
-
+<ol>
 !
-echo "- Drag the [trello-cards]("$(cat bookmarklet)") bookmarklet to your bookmarks bar "
+echo "<li>Drag the <a href='"$(cat bookmarklet)"'>trello-cards</a> bookmarklet to your bookmarks bar</li>"
 
 cat <<-!
-- Run the bookmark from within trello board page.
-- Print on A4 in landscape mode, cut and and fold in half:
-- [Fork me on GitHub](https://github.com/kouphax/trello-cards")
+<li>Run the bookmark from within trello board page.</li>
+<li>Print on A4 in landscape mode, cut and and fold in half</li>
+<li><a href="https://github.com/kouphax/trello-cards">Fork me on GitHub</a></li>
 
-<p>Made by <a href="http://whatfettle.com">psd</a> for <a href="http://www.gov.uk">Gov.UK</a> and inspired by <a href="http://davidheath.org/">David</a>.</p>
+Based on [pivotal-cards](https://github.com/psd/pivotal-cards) by [psd](http://whatfettle.com)</a> and inspired by <a href="http://davidheath.org/">David</a>.</p>
 !
 ) > README.md
