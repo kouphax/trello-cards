@@ -1,21 +1,18 @@
 /*
- *
- *  Print a https://www.pivotaltracker.com view as index cards
- *
- *  depends on jQuery and Underscore and the Pivotal code ..
- *
+ *  Print a https://www.trello.com view as index cards
+ *  depends on jQuery and Underscore and the Trello ..
  *  released under the WTFPL licence
  *
  *  https://github.com/psd/pivotal-cards
- *
+ *  https://github.com/kouphax/trello-cards
  */
 (function ($, global, undefined) {
 
   var options = {
-    "filing-colours": true,
-    "rubber-stamp": true,
-    "double-sided": true,
-    "white-backs": true
+    "filing-colours" : true,
+    "rubber-stamp"   : true,
+    "double-sided"   : true,
+    "white-backs"    : true
   };
 
   var make_front = _.template(
@@ -59,6 +56,7 @@
     '  </div>' +
     '</div>');
 
+  //Hide the entire body and overlay it with our card container
   $('body > *').hide();
   var main = $('<div id="pivotal-cards-pages"></div>');
   _.each(options, function(value, option) {
@@ -69,48 +67,56 @@
   $('body').append(main);
 
   var projectName = $("#board-header .board-name span.text").text();
-  /*
-   *  Find visible items
-   */
-
-
   var fronts = [];
   var backs = [];
+  var items = [];
 
-  // grab the visible cards (should be with ALL cards or "matched-cards" if filtering is on
-  var items = []
+  // discover what cards to display - e.g. are they filtered or not
   if($("#board").hasClass("filtering")){
     items = $(".list-card.matched-card")
   }else{
     items = $(".list-card")
   }
 
-
+  // generate card for each found card
   items.each(function() {
-    var anchor = $(this).find("a.list-card-title");
 
+    // get the card title anchor in the card to extract the id of the card
+    var anchor = $(this).find("a.list-card-title");
     var id = anchor.attr("href").split("/").splice(-1,1);
-    var name = anchor.text();
+
+    // get the card model
+    var card = global.boardView.model.getCard(parseInt(id,0))
+
+    // get the name of the card from the model
+    var name = card.get("name");
+
+    // check the name for possible existence of "points" for people using the 
+    // trello scrum plugin (https://chrome.google.com/webstore/detail/jdbcdblgjdpmfninkoogcfpnkjmndgje?utm_source=chrome-ntp-icon)
+    // if the points exist we want ot strip them from the name and extract their value out
     var hasPoints = /^\((\d+)\)/.test(name)
     var points = "?"
-
     if(hasPoints){
       points = /^\((\d+)\)/.exec(name)[1]
       name = name.replace(/^\((\d+)\)/, "")
     }
 
-    var card = global.boardView.model.getCard(parseInt(id,0))
+    // get the card description
     var desc = card.get("desc")
 
+    // get the tasks from the card.  This is determined as the first checklist on the card
+    // all others will be ignored.
     var tasks = [];
     var checklistId = card.get("idChecklists")[0]
 
     if(checklistId !== undefined){
       var list = boardView.model.getChecklist(checklistId).get("checkItems");
       tasks = _.map(list, function(item){
+        // determine if the card is complete by checking the state list
         var isComplete = card.checkItemStateList.any(function(state){
           return (state.get("idCheckItem") === item.id) && (state.get("state") === "complete")
         })
+
         return {
           complete: isComplete,
           description: item.name
@@ -118,24 +124,24 @@
       })
     }
 
+    // create our card object
     var item = {
-      cardno: id,
-      id: id,
-      name: name,
-      description: desc,
-      project_name: projectName,
-      labels: [],
-      tasks: tasks,
-      requester: null,
-      owner: null,
-      points: points
+      cardno       : id,
+      id           : id,
+      name         : name,
+      description  : desc,
+      project_name : projectName,
+      tasks        : tasks,
+      points       : points,
+      labels       : [],     // TODO
+      requester    : null,   // TODO
+      owner        : null    // TODO
     };
 
+    // generate the front and the back of the cards
     fronts.push($(make_front(item)));
     backs.push($(make_back(item)));
-
   });
-
 
   /*
    *  layout cards
