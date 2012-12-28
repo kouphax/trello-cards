@@ -9,7 +9,7 @@
  *  https://github.com/psd/pivotal-cards
  *
  */
-(function ($) {
+(function ($, global, undefined) {
 
   var options = {
     "filing-colours": true,
@@ -47,8 +47,8 @@
     '      <div class="description"><%= description %></div>' +
     '      <table class="tasks">' +
     '<% _.each(tasks, function(task) { %><tr>' +
-    '      <td class="check <%= task._complete ? "complete" : "incomplete" %>"><%= task._complete ? "☑" : "☐" %></td>' +
-    '      <td class="task"><%= task._description %></td>' +
+    '      <td class="check <%= task.complete ? "complete" : "incomplete" %>"><%= task.complete ? "☑" : "☐" %></td>' +
+    '      <td class="task"><%= task.description %></td>' +
     '</tr><% }); %>' +
     '      </table>' +
     '    </div>' +
@@ -99,16 +99,35 @@
       name = name.replace(/^\((\d+)\)/, "")
     }
 
+    var card = global.boardView.model.getCard(parseInt(id,0))
+    var desc = card.get("desc")
+
+    var tasks = [];
+    var checklistId = card.get("idChecklists")[0]
+
+    if(checklistId !== undefined){
+      var list = boardView.model.getChecklist(checklistId).get("checkItems");
+      tasks = _.map(list, function(item){
+        var isComplete = card.checkItemStateList.any(function(state){
+          return (state.get("idCheckItem") === item.id) && (state.get("state") === "complete")
+        })
+        return {
+          complete: isComplete,
+          description: item.name
+        }
+      })
+    }
+
     var item = {
       cardno: id,
       id: id,
       name: name,
-      description: "TODO",
+      description: desc,
       project_name: projectName,
       labels: [],
-      tasks: [],
-      requester: "TODO",
-      owner: "TODO",
+      tasks: tasks,
+      requester: null,
+      owner: null,
       points: points
     };
 
@@ -159,4 +178,4 @@
     single_sided();
   }
 
-}(jQuery));
+}(jQuery, this));

@@ -98,6 +98,7 @@
 	vertical-align: middle;
 	text-transform: uppercase;
 	z-index: 4;
+	line-height: 1em;
 }
 
 .labels {
