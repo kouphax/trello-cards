@@ -56,16 +56,6 @@
     '  </div>' +
     '</div>');
 
-  //Hide the entire body and overlay it with our card container
-  $('body > *').hide();
-  var main = $('<div id="pivotal-cards-pages"></div>');
-  _.each(options, function(value, option) {
-    if (value) {
-      main.addClass(option);
-    }
-  });
-  $('body').append(main);
-
   var projectName = $("#board-header .board-name span.text").text();
   var fronts = [];
   var backs = [];
@@ -83,6 +73,16 @@
     // do all the cards!
     items = $(".list-card")
   }
+  
+  //Hide the entire body and overlay it with our card container
+  $('body > *').hide();
+  var main = $('<div id="pivotal-cards-pages"></div>');
+  _.each(options, function(value, option) {
+    if (value) {
+      main.addClass(option);
+    }
+  });
+  $('body').append(main);
 
   // generate card for each found card
   items.each(function() {
