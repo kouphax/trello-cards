@@ -71,16 +71,21 @@
   var backs = [];
   var items = [];
 
-  // discover what cards to display - e.g. are they filtered or not
+  
   if($("#board").hasClass("filtering")){
+    // filtering is on
     items = $(".list-card.matched-card")
-  }else{
+  } else if($(".window:visible").length > 0) {
+    // a single card is open
+    var path = global.location.pathname
+    items = $("a[href='" + path + "']")
+  } else{
+    // do all the cards!
     items = $(".list-card")
   }
 
   // generate card for each found card
   items.each(function() {
-
     // get the card title anchor in the card to extract the id of the card
     var anchor = $(this).find("a.list-card-title");
     var id = anchor.attr("href").split("/").splice(-1,1);
