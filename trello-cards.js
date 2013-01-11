@@ -72,14 +72,14 @@
   var items = [];
 
   
-  if($("#board").hasClass("filtering")){
-    // filtering is on
-    items = $(".list-card.matched-card")
-  } else if($(".window:visible").length > 0) {
+  if($(".window:visible").length > 0) {
     // a single card is open
     var path = global.location.pathname
     items = $("a[href='" + path + "']")
-  } else{
+  } else if($("#board").hasClass("filtering")){
+    // filtering is on
+    items = $(".list-card.matched-card")
+  } else {
     // do all the cards!
     items = $(".list-card")
   }
