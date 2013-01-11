@@ -65,7 +65,7 @@
   if($(".window:visible").length > 0) {
     // a single card is open
     var path = global.location.pathname
-    items = $("a[href='" + path + "']")
+    items = $("a[href='" + path + "']").parents('.list-card').first()
   } else if($("#board").hasClass("filtering")){
     // filtering is on
     items = $(".list-card.matched-card")
