@@ -25,7 +25,7 @@
   }
 
   var make_front = _.template(
-    '<div class="card" id="front-<%= cardno %>">' +
+    '<div class="card" id="front-<%= cardno %>" style="background-color:<%=cardColour%>">' +
     '  <div class="front side">' +
     '    <div class="header">' +
     '      <span class="labels">' +
