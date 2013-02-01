@@ -15,6 +15,15 @@
     "white-backs"    : true
   };
 
+  var cardColours = {
+    blue   : "rgb(0,0,255,0.3)",
+    green  : "rgb(0,255,0,0.3)",
+    orange : "rgb(255,165,0,0.3)",
+    purple : "rgb(128,0,128,0.3)",
+    red    : "rgb(255,0,0,0.3)",
+    yellow : "rgb(255,255,0,0.3)"
+  }
+
   var make_front = _.template(
     '<div class="card" id="front-<%= cardno %>">' +
     '  <div class="front side">' +
@@ -96,7 +105,8 @@
 
     // build up the list of labels and their names
     while(match = labelizer.exec(classes)) {
-      labels.push(match[0]);
+      labels.push(match[1]);
+
       var labelname = global.boardView.model.get("labelNames")[match[1]];
       if(labelname) {
         labelnames.push(labelname)
@@ -142,11 +152,14 @@
       })
     }
 
+    var cardColour = cardColours[labels[0]] || "rgba(0,0,0,0)";
+
     // create our card object
     var item = {
       cardno       : id,
       id           : id,
       name         : name,
+      cardColour   : cardColour,
       description  : desc,
       project_name : projectName,
       tasks        : tasks,
