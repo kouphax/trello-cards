@@ -97,14 +97,14 @@
     // build up the list of labels and their names
     while(match = labelizer.exec(classes)) {
       labels.push(match[0]);
-      var labelname = global.boardView.model.get("labelNames")[match[0]];
+      var labelname = global.boardView.model.get("labelNames")[match[1]];
       if(labelname) {
         labelnames.push(labelname)
       }
     } 
 
     // get the card model
-    var card = global.boardView.model.getCard(parseInt(id,0))
+    var card = global.boardView.model.getCard(parseInt(id,10))
 
     // get the name of the card from the model
     var name = card.get("name");
