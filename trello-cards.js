@@ -16,12 +16,12 @@
   };
 
   var cardColours = {
-    blue   : "rgb(0,0,255,0.3)",
-    green  : "rgb(0,255,0,0.3)",
-    orange : "rgb(255,165,0,0.3)",
-    purple : "rgb(128,0,128,0.3)",
-    red    : "rgb(255,0,0,0.3)",
-    yellow : "rgb(255,255,0,0.3)"
+    blue   : "rgba(0,0,255,0.3)",
+    green  : "rgba(0,255,0,0.3)",
+    orange : "rgba(255,165,0,0.3)",
+    purple : "rgba(128,0,128,0.3)",
+    red    : "rgba(255,0,0,0.3)",
+    yellow : "rgba(255,255,0,0.3)"
   }
 
   var make_front = _.template(
