@@ -57,10 +57,9 @@
     '</div>');
 
   var projectName = $("#board-header .board-name span.text").text();
-  var fronts = [];
-  var backs = [];
-  var items = [];
-
+  var fronts      = [];
+  var backs       = [];
+  var items       = [];
   
   if($(".window:visible").length > 0) {
     // a single card is open
@@ -87,8 +86,22 @@
   // generate card for each found card
   items.each(function() {
     // get the card title anchor in the card to extract the id of the card
-    var anchor = $(this).find("a.list-card-title");
-    var id = anchor.attr("href").split("/").splice(-1,1);
+    var anchor     = $(this).find("a.list-card-title");
+    var id         = anchor.attr("href").split("/").splice(-1,1);
+    var classes    = $(this).attr("class")
+    var labelizer  = /([a-zA-Z]+)-label/g;
+    var labels     = [];
+    var labelnames = []
+    var match      = [];
+
+    // build up the list of labels and their names
+    while(match = labelizer.exec(classes)) {
+      labels.push(match[0]);
+      var labelname = global.boardView.model.get("labelNames")[match[0]];
+      if(labelname) {
+        labelnames.push(labelname)
+      }
+    } 
 
     // get the card model
     var card = global.boardView.model.getCard(parseInt(id,0))
@@ -138,7 +151,7 @@
       project_name : projectName,
       tasks        : tasks,
       points       : points,
-      labels       : [],     // TODO
+      labels       : labelnames,
       requester    : null,   // TODO
       owner        : null    // TODO
     };
