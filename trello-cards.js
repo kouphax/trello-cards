@@ -8,6 +8,9 @@
  */
 (function ($, global, undefined) {
 
+  global.boardView = global.boardView || {}
+  global.boardView.model = window.ModelCache._cache.Card[1].getBoard()
+  
   var options = {
     "filing-colours" : true,
     "rubber-stamp"   : true,
