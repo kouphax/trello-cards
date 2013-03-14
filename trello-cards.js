@@ -9,7 +9,7 @@
 (function ($, global, undefined) {
 
   global.boardView = global.boardView || {}
-  global.boardView.model = window.ModelCache._cache.Card[1].getBoard()
+  global.boardView.model = window.ModelCache._cache.Card[0].getBoard()
   
   var options = {
     "filing-colours" : true,
@@ -138,7 +138,10 @@
     // get the tasks from the card.  This is determined as the first checklist on the card
     // all others will be ignored.
     var tasks = [];
-    var checklistId = card.get("idChecklists")[0]
+    var checklistId = undefined
+    if(card.checklistList.size > 0) {
+      checklistId = card.checklistList.first.get("id")
+    }
 
     if(checklistId !== undefined){
       var list = boardView.model.getChecklist(checklistId).get("checkItems");
