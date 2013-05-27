@@ -1,4 +1,8 @@
-# Pivotal Cards
+
+> This bookmarkelt relied on some internal peroprties of the Trello code which would change after a release which would break this bookmarklet.  As such this bookmarklet is depreacated.  Instead use [Trello Printer](http://yobriefca.se/trello-printer/)
+
+
+# Trello Cards
 
 Printable index cards for your [Trello](https://www.trello.com) project
 <ol>
