@@ -1,5 +1,5 @@
 TEST_LOCATION="http://localhost:8000/"
-LIVE_LOCATION="http://yobriefca.se/trello-cards/"
+LIVE_LOCATION="//yobriefca.se/trello-cards/"
 
 all::	dependencies
 all::	bookmarklet test-bookmarklet
